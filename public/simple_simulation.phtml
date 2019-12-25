@@ -1,0 +1,73 @@
+<?php require ('header.phtml') ?>
+<div>
+<?php
+    $players = rollDice();
+    // $players = [
+    //     [6,6,6,6,6,6],
+    //     [6,6,6,6,6,6],
+    //     [6,6,6,6,6,6],
+    //     [6,6,6,6,6,6]
+    // ];
+    $winner = null;
+    $round = 1;
+
+    while(is_null($winner)){
+        if($round%2==0){
+            echo "<div class='col-6 float-right'>";
+        } else{
+            echo "<div class='col-6 float-left'>";
+        }
+        echo "<h2 class='pl-2 font-weight-bold'>\nRound $round\n</h2>";
+        echo "<p class='pl-2 font-weight-bold'>After the dice rolled\n</p>";
+        for($i = 0; $i < count($players); $i++){
+            echo "<p class='pl-2 '>Player-".($i+1).": ";
+            for($j = 0; $j < count($players[$i]); $j++){
+                echo $players[$i][$j]." ";
+            }
+            echo "</p>";
+        }
+        $players = letsPlayByTheRules($players);
+        echo "<p class='pl-2 font-weight-bold'>\nAfter the dice moved or/and removed\n</p>";
+        for($i = 0; $i < count($players); $i++){
+            echo "<p class='pl-2 '>Player-".($i+1).": ";
+            for($j = 0; $j < count($players[$i]); $j++){
+                echo $players[$i][$j]." ";
+            }
+            echo "</p>";
+        }
+        echo "</div>";
+        $_winners = array_filter($players, function($player){
+            return (count($player)==0);
+        });
+        if(count($_winners)==1){
+            $_winner_index = array_keys($_winners);
+            echo "<div class='col-12 row center'>";
+            echo "<h1 class='col-12 text-center'>\nWinner is Player-".($_winner_index[0]+1)."\n\n</h1>";
+            echo "</div>";
+            $winner = $_winners;
+        } else if(count($_winners)>1){
+            $_winner_index = array_keys($_winners);
+            echo "<div class='col-12 row center'>";
+            echo "<h1 class='col-12 text-center'>\nIt's a tie for ";
+            for($i = 0; $i < count($_winner_index); $i++){
+                
+                echo "Player-". ($_winner_index[$i]+1);
+                if($i == count($_winner_index)-2){
+                    echo " and ";
+                } else if($i < count($_winner_index)-1){
+                    echo ", ";
+                }
+            }
+            echo "\n\n</h1>";
+            echo "</div>";
+            $winner = $_winners;
+        }
+
+        $diceCount = getDiceCount($players);
+        $players = rollDice($diceCount);
+
+        $round++;
+    }
+?>
+</div>
+<?php require ('footer.phtml') ?>

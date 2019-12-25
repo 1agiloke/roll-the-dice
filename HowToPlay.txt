@@ -1,0 +1,15 @@
+requirements:
+php (AMP/NMP stack is OK)
+
+This project should includes the vendors
+In case of dependencies problems, please run: 
+"composer install"
+
+To serve the project, run:
+"cd public; php -S localhost:8888;"
+then open browser and access localhost:8888/
+
+To see simpler example:
+access localhost:8888/simple-demo 
+or run:
+"php roll-the-dice.php" (from roll-the-dice/public directory)

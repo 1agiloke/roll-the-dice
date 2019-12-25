@@ -1,0 +1,25 @@
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/roll-a-die.js"></script>
+    <?php
+    if (isset($scripts)) {
+        foreach ($scripts as $value) {
+            if (is_array($value)) {
+                if (isset($value['assets']) && $value['assets'] == TRUE) {
+                    echo(script_tag($value['src'], TRUE));
+                } else {
+                    echo(script_tag($value['src']));
+                }
+            } else {
+                echo(script_tag($value));
+            }
+        }
+    }
+    ?>
+</body>
+</html>
